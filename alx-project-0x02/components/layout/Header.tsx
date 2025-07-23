@@ -13,6 +13,10 @@ const Header = () => {
         <Link href="/about" className="text-gray-700 hover:text-blue-500">
           About
         </Link>
+
+        <Link href="/about" className="text-gray-700 hover:text-blue-500">
+          About
+        </Link>
       </nav>
     </header>
   );
