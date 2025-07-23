@@ -1,23 +1,43 @@
-import React from "react";
+// pages/home.tsx
+import React, { useState } from "react";
 import Card from "@/components/common/Card";
+import PostModal from "@/components/common/PostModal";
 
-const Home = () => {
+interface Post {
+  title: string;
+  content: string;
+}
+
+const HomePage = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleAddPost = (title: string, content: string) => {
+    setPosts((prevPosts) => [...prevPosts, { title, content }]);
+  };
+
   return (
-    <main className="p-6 space-y-4">
-      <Card
-        title="Fast Development"
-        content="Build apps quickly using Next.js and Tailwind."
+    <div className="min-h-screen py-10 px-5">
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="mb-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+        Create New Post
+      </button>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post, index) => (
+          <Card key={index} title={post.title} content={post.content} />
+        ))}
+      </div>
+
+      <PostModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleAddPost}
       />
-      <Card
-        title="Typed with TypeScript"
-        content="Enjoy full type safety across your components."
-      />
-      <Card
-        title="Reusable Components"
-        content="Break your UI into clean, reusable parts."
-      />
-    </main>
+    </div>
   );
 };
 
-export default Home;
+export default HomePage;
