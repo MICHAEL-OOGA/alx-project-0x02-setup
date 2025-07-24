@@ -11,18 +11,20 @@ interface UsersPageProps {
 const UsersPage: React.FC<UsersPageProps> = ({ users }) => {
   return (
     <div className="min-h-screen p-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 bg-gray-100">
-      {users.map((user, index) => (
-        <UserCard key={index} {...user} />
+      {users.map((user) => (
+        <UserCard key={user.id} {...user} />
       ))}
     </div>
   );
 };
 
+// ✅ Required by system: getStaticProps for SSG
 export const getStaticProps = async () => {
   const res = await fetch("https://jsonplaceholder.typicode.com/users");
   const data = await res.json();
 
   const users: UserProps[] = data.map((user: any) => ({
+    id: user.id,
     name: user.name,
     email: user.email,
     address: {
